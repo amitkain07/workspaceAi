@@ -1,23 +1,19 @@
-
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { DatabaseConnection } from './database/connection';
+import { PrismaService } from './database/prismaConnection';
+import { MongoService } from './database/mongoConnection';
 
 @Module({
   imports: [
-    // Load .env globally
+    
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-
-    // MongoDB connection
-    MongooseModule.forRoot(process.env.DB_URI as string),
   ],
   controllers: [AppController],
-  providers: [AppService, DatabaseConnection],
+  providers: [AppService, PrismaService, MongoService],
 })
 export class AppModule {}
-
