@@ -1,98 +1,240 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🧠 AI Workspace Platform — Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Production-ready, scalable backend for a multi-tenant AI Workspace Platform built with **NestJS**, **TypeScript**, **Prisma (PostgreSQL)**, and **Mongoose (MongoDB)**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This platform enables organizations and teams to collaborate with AI, manage workspaces, upload documents, and track AI usage in a secure, enterprise-grade environment.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🚀 Features
 
-## Project setup
+### 🔐 Authentication & Security
 
-```bash
-$ npm install
+* Cookie-based JWT authentication
+* Refresh token rotation
+* Session management (device tracking)
+* Role-Based Access Control (RBAC)
+* Organization-level isolation
+* HTTP-only cookies
+* Input validation & sanitization
+* Rate limiting (planned)
+
+---
+
+### 👥 Multi-Tenant Architecture
+
+* Organizations & team management
+* Member roles & permissions
+* Workspace isolation per organization
+
+---
+
+### 🤖 AI Integration
+
+* AI conversations per workspace
+* Multi-provider LLM orchestration
+* Usage tracking (tokens, cost)
+* Conversation history
+
+---
+
+### 📂 Workspace & Resources
+
+* Workspaces per organization
+* File & document management
+* AI-powered document interaction (RAG — planned)
+
+---
+
+### 🏗️ Production-Ready Infrastructure
+
+* Modular monolith architecture
+* Hybrid database strategy
+* Background jobs ready (BullMQ)
+* Caching ready (Redis)
+* Scalable API design
+* Health checks & observability (planned)
+
+---
+
+## 🧱 Tech Stack
+
+### Backend
+
+* NestJS
+* TypeScript
+
+### Databases
+
+* PostgreSQL — relational data (Prisma ORM)
+* MongoDB — unstructured data (Mongoose)
+
+### Security & Auth
+
+* JWT (cookie-based)
+* Passport
+* bcrypt
+
+### AI Layer
+
+* OpenAI / DeepSeek / Local models (planned fallback)
+
+---
+
+## 🏛️ Architecture Overview
+
+### Hybrid Database Strategy
+
+**PostgreSQL (Prisma)** — structured relational data:
+
+* Users
+* Organizations
+* Memberships
+* Sessions
+* Workspaces
+* Usage tracking
+
+**MongoDB (Mongoose)** — flexible AI data:
+
+* Conversations
+* Messages
+* Documents
+* AI logs
+
+---
+
+## 🔄 System Flow
+
+### User Lifecycle
+
+Visitor → Register/Login → Create Organization → Invite Members → Create Workspace → Use AI → Usage Tracked
+
+---
+
+### Authentication Flow
+
+Login → Verify Credentials → Create Session → Issue Access Token (cookie) → Issue Refresh Token (cookie) → Protected API Access → Token Rotation
+
+---
+
+### AI Request Flow
+
+User Prompt → Auth Guard → RBAC Check → Workspace Context → AI Orchestrator → Model Providers → Store Conversation → Response
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+ ├── modules/
+ │    ├── auth/
+ │    ├── users/
+ │    ├── organizations/
+ │    ├── workspaces/
+ │    └── ai/
+ ├── common/
+ │    ├── guards/
+ │    ├── decorators/
+ │    ├── interceptors/
+ │    └── utils/
+ ├── config/
+ └── database/
 ```
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ npm run start
+## ⚙️ Environment Variables
 
-# watch mode
-$ npm run start:dev
+Create `.env` in project root:
 
-# production mode
-$ npm run start:prod
+```
+NODE_ENV=development
+PORT=4000
+
+DATABASE_URL="postgresql://user:password@localhost:5432/ai_workspace"
+MONGO_URI="mongodb://localhost:27017/ai_workspace"
+
+JWT_SECRET=your_access_secret
+JWT_REFRESH_SECRET=your_refresh_secret
 ```
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+## 🛠️ Getting Started
 
-# e2e tests
-$ npm run test:e2e
+### 1️⃣ Install dependencies
 
-# test coverage
-$ npm run test:cov
+```
+npm install
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### 2️⃣ Setup PostgreSQL (Prisma)
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```
+npx prisma migrate dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+### 3️⃣ Run development server
 
-Check out a few resources that may come in handy when working with NestJS:
+```
+npm run start:dev
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Server will start at:
 
-## Support
+```
+http://localhost:4000
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## 🧪 Development Roadmap
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Phase 1 — Core
 
-## License
+* Authentication system
+* Organizations & RBAC
+* Workspaces
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Phase 2 — AI Layer
+
+* Conversations
+* Document processing
+* AI orchestration
+
+### Phase 3 — Production Hardening
+
+* Billing & subscriptions
+* Monitoring
+* Rate limiting
+* Caching
+* Background jobs
+
+---
+
+## 🎯 Project Goals
+
+This project is designed to simulate a real **AI SaaS backend**, demonstrating:
+
+* Production architecture
+* Security best practices
+* Scalable design
+* Multi-tenant systems
+* AI integration patterns
+
+---
+
+## 📜 License
+
+MIT License
+
+---
+
+## 👨‍💻 Author
+
+Built as a production-grade backend learning project focused on modern AI-era systems engineering.
